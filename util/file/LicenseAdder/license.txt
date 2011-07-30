@@ -1,5 +1,5 @@
 /**
 
-	das ist meine License
+	das ist meine Apache 2.0 License
 
 */
