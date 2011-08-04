@@ -9,6 +9,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.wholestone.fitsizer.FitSizer.Message;
+
 public class FitSizerTest {
 	
 	
@@ -25,7 +27,7 @@ public class FitSizerTest {
 		boolean valid = fitSizer.validateParameters();
 
 		assertFalse(valid);
-		assertEquals(FitSizer.NO_ARGUMENTS, getOutput());
+		assertEquals(Message.NO_ARGUMENTS.plain(), getOutput());
 	}
 
 	@Test
@@ -37,14 +39,14 @@ public class FitSizerTest {
 		fitSizer = new FitSizer("X:\\x", "10");
 		valid = fitSizer.validateParameters();
 		assertFalse(valid);
-		assertEquals(String.format(FitSizer.DIR_NOT_EXISTS, "X:\\x"), getOutput());
+		assertEquals(Message.DIR_NOT_EXISTS.withParameter("X:\\x"), getOutput());
 		
 		stdout.reset();
 
 		fitSizer = new FitSizer("-$-X:\\x", "10");
 		valid = fitSizer.validateParameters();
 		assertFalse(valid);
-		assertEquals(String.format(FitSizer.DIR_NOT_EXISTS, "-$-X:\\x"), getOutput());
+		assertEquals(Message.DIR_NOT_EXISTS.withParameter("-$-X:\\x"), getOutput());
 	}
 	
 //	@Test

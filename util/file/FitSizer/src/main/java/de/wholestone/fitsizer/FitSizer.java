@@ -4,10 +4,24 @@ import java.io.File;
 
 public class FitSizer {
 
-//	// Enums
-//	xxx;
-	public static final String NO_ARGUMENTS = "No Arguments";
-	public static final String DIR_NOT_EXISTS = "Das angegebene Verzeichnis '%s' existiert nicht!";
+	enum Message {
+		NO_ARGUMENTS("No Arguments"),
+		DIR_NOT_EXISTS("Das angegebene Verzeichnis '%s' existiert nicht!");
+	
+		private final String message;
+
+		private Message(String message) {
+			this.message = message;
+		}
+
+		public String withParameter(Object... parameters) {
+			return String.format(plain(), parameters);
+		}
+		
+		public String plain() {
+			return message;
+		}
+	}
 
 	private final String[] args;
 
@@ -17,12 +31,13 @@ public class FitSizer {
 
 	public boolean validateParameters() {
 		if(args == null || args.length < 2){
-			System.out.println(NO_ARGUMENTS);
+			System.out.println(Message.NO_ARGUMENTS.plain());
 			return false;
 		}
-		File directory = new File(args[0]);
-		if (!directory.exists()) {
-			System.out.println(String.format(DIR_NOT_EXISTS, args[0]));
+		String dirName = args[0];
+		File dir = new File(dirName);
+		if (!dir.exists()) {
+			System.out.println(Message.DIR_NOT_EXISTS.withParameter(dirName));
 			return false;
 		}
 		return true;
